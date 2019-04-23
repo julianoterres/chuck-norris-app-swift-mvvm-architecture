@@ -1,0 +1,6 @@
+github "Alamofire/Alamofire" "4.8.0"
+github "RxSwiftCommunity/RxAlamofire" "master"
+github "Quick/Quick"
+github "Quick/Nimble"
+github "RxSwiftCommunity/RxDataSources" ~> 3.0
+github "ElaWorkshop/TagListView" ~> 1.0
