@@ -12,55 +12,50 @@ import RxCocoa
 
 class ListViewModel {
   
-  let facts: Driver<[Fact]>
+  let facts: Driver<[FactView]>
+  let hideTable: Driver<Bool>
+  let hideNoResultFound: Driver<Bool>
   
-  init(didSearchbarAction: ControlEvent<Void>) {
+  init(didSearchbarAction: Observable<String>, service: ListService) {
     
-    facts = didSearchbarAction.do(onNext: { termSearch in
-      
-    }).map({
-      return [Fact(name: "João"), Fact(name: "Pedro")]
-    }).asDriver(onErrorJustReturn: [])
+    let tableHide = BehaviorRelay(value: false)
+    let noResultFoundHide = BehaviorRelay(value: true)
+    
+    hideTable = tableHide
+      .startWith(false)
+      .asDriver(onErrorJustReturn: false)
+    
+    hideNoResultFound = noResultFoundHide
+      .startWith(true)
+      .asDriver(onErrorJustReturn: true)
+    
+    facts = didSearchbarAction
+      .do(onNext: { _ in
+        tableHide.accept(true)
+        noResultFoundHide.accept(true)
+      })
+      .flatMapLatest({ (term) in
+        service.fetchFacts(term: term)
+      })
+      .map({
+        $0.result.map({ factApi -> FactView in
+          var category = "Uncategorized"
+          if let categories = factApi.category {
+            category = categories.joined(separator: " - ")
+          }
+          return FactView(
+            text: factApi.value ?? "",
+            category: category
+          )
+        })
+      })
+      .do(onNext: { factsView in
+        let noResultFoundShow = (factsView.count > 0) ? true : false
+        noResultFoundHide.accept(noResultFoundShow)
+        tableHide.accept(false)
+      })
+      .asDriver(onErrorJustReturn: [])
     
   }
   
 }
-
-
-
-//class MovieListViewModel {
-//
-//  let movies: Driver<[MovieSectionsItens]>
-//  let mainLoadingActive: Driver<Bool>
-//  let footerLoadingActive: Driver<Bool>
-//  private let disposeBag = DisposeBag()
-//
-//  init(loadMore: Observable<Void>, service: MoviesService) {
-//
-//    var page = 1
-//    let showLoader = BehaviorRelay(value: true)
-//    let showFooterLoader = BehaviorRelay(value: true)
-//
-//    self.mainLoadingActive = showLoader.startWith(true)
-//      .asDriver(onErrorJustReturn: true)
-//
-//    self.footerLoadingActive = showFooterLoader.startWith(true)
-//      .asDriver(onErrorJustReturn: true)
-//
-//    self.movies = loadMore.startWith(())
-//      .flatMapLatest { _ in service.getPopular(page: page) }
-//      .do(onNext: { movieResponseData in
-//        showFooterLoader.accept(!(movieResponseData.total_pages == page))
-//        showLoader.accept(false)
-//        page += 1
-//      })
-//      .map { $0.results }
-//      .scan([]) { (moviesAlredyAdd, newMovies) -> [Movie] in
-//        return moviesAlredyAdd + newMovies
-//      }
-//      .map { [MovieSectionsItens(header: "", items: $0)] }
-//      .asDriver(onErrorJustReturn: [])
-//
-//  }
-//
-//}

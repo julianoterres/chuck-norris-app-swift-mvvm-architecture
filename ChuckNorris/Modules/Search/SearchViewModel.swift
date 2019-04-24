@@ -7,9 +7,26 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class SearchViewModel {
   
+  let categories: Driver<[String]>
+  let recents: Driver<[String]>
   
+  init(service: SearchService) {
+    
+    categories = service
+      .fetchCategories()
+      .map({ $0 })
+      .asDriver(onErrorJustReturn: [])
+    
+    recents = service
+      .fetchCategories()
+      .map({ $0 })
+      .asDriver(onErrorJustReturn: [])
+    
+  }
   
 }

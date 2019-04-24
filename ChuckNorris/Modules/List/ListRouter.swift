@@ -14,10 +14,13 @@ class ListRouter: ListRouterProtocol {
   
   func build() -> ListViewController {
     let viewController = ListViewController()
-    let router = ListRouter()
-    viewController.router = router
-    viewController.searchViewController = SearchRouter().build()
-    router.viewController = viewController
+    let api = API()
+    let searchBarTextEvent = viewController.searchBar.rx.searchButtonClicked.withLatestFrom(viewController.searchBar.rx.text.orEmpty.asObservable())
+    let service = ListService(api: api)
+    let viewModel = ListViewModel(didSearchbarAction: searchBarTextEvent, service: service)
+    let searchViewController =  SearchRouter().build()
+    viewController.viewModel = viewModel
+    viewController.searchViewController = searchViewController
     return viewController
   }
   

@@ -18,17 +18,9 @@ class SearchViewController: UIViewController {
   let recentsTagList = TagListView()
   let suggestionsTitle = UILabel()
   let recentsTitle = UILabel()
+  
   var disposeBag = DisposeBag()
-  
-  init() {
-    super.init(nibName: nil, bundle: nil)
-    modalPresentationStyle = .overCurrentContext
-    modalPresentationCapturesStatusBarAppearance = true
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("\(#file) \(#function) not implemented")
-  }
+  var viewModel: SearchViewModel! { didSet { addRxEventsInElements() } }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -65,7 +57,7 @@ class SearchViewController: UIViewController {
     scrollView.addConstraint(attribute: .top, alignElement: view, alignElementAttribute: .top, constant: 20)
     scrollView.addConstraint(attribute: .right, alignElement: view, alignElementAttribute: .right, constant: 0)
     scrollView.addConstraint(attribute: .left, alignElement: view, alignElementAttribute: .left, constant: 0)
-    scrollView.addConstraint(attribute: .bottom, alignElement: view, alignElementAttribute: .bottom, constant: 0)
+    scrollView.addConstraint(attribute: .bottom, alignElement: view, alignElementAttribute: .bottom, constant: 215)
     scrollView.contentSize = CGSize(width: 0, height: (view.frame.size.height + suggestionsTagList.frame.size.height + recentsTagList.frame.size.height))
   }
   
@@ -90,8 +82,6 @@ class SearchViewController: UIViewController {
     suggestionsTagList.addConstraint(attribute: .top, alignElement: suggestionsTitle, alignElementAttribute: .bottom, constant: 20)
     suggestionsTagList.addConstraint(attribute: .right, alignElement: scrollView, alignElementAttribute: .right, constant: 20)
     suggestionsTagList.addConstraint(attribute: .left, alignElement: scrollView, alignElementAttribute: .left, constant: 20)
-    let names = ["Ana", "Maria", "Juliano", "Aline", "Pedro", "Idalina", "Viviane", "Augusto"]
-    suggestionsTagList.addTags(names)
   }
   
   func addRecentsTitle() {
@@ -117,15 +107,19 @@ class SearchViewController: UIViewController {
     recentsTagList.addConstraint(attribute: .left, alignElement: scrollView, alignElementAttribute: .left, constant: 20)
     recentsTagList.addConstraint(attribute: .bottom, alignElement: scrollView, alignElementAttribute: .bottom, constant: 20)
     recentsTagList.addConstraint(attribute: .centerX, alignElement: scrollView, alignElementAttribute: .centerX, constant: 0)
-    
-    let names = ["Ana2", "Maria2", "Juliano2", "Aline2", "Pedro2", "Idalina2", "Viviane2", "Augusto2", "Fred2", "Maicon2", "Wagner2"]
-    recentsTagList.addTags(names)
-    
   }
   
   func addRxEventsInElements() {
     
+    viewModel.categories.drive(onNext: { [weak self] categories in
+      self?.suggestionsTagList.removeAllTags()
+      self?.suggestionsTagList.addTags(Array(categories.shuffled().prefix(8)))
+    }).disposed(by: disposeBag)
     
+    viewModel.recents.drive(onNext: { [weak self] recents in
+      self?.recentsTagList.removeAllTags()
+      self?.recentsTagList.addTags(recents.reversed())
+    }).disposed(by: disposeBag)
     
   }
   

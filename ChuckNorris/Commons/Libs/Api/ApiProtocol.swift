@@ -1,5 +1,5 @@
 //
-//  Fact.swift
+//  ApiProtocol.swift
 //  ChuckNorris
 //
 //  Created by Juliano Terres on 23/04/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Fact {
-  let name: String?
-//  let category: String?
+protocol APIProtocol: class {
+  func searchUrl(term: String) -> URL 
 }
+

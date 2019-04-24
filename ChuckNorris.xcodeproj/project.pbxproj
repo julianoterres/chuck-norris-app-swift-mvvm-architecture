@@ -32,8 +32,16 @@
 		E3041A2A226E6CA10024F743 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3041A17226E6BC90024F743 /* Nimble.framework */; };
 		E3041A2E226E6DBC0024F743 /* ListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A2D226E6DBC0024F743 /* ListProtocols.swift */; };
 		E3041A30226E8E8D0024F743 /* TagListView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3041A2F226E8E8D0024F743 /* TagListView.framework */; };
-		E3041A33226F8A290024F743 /* Fact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A32226F8A290024F743 /* Fact.swift */; };
+		E3041A33226F8A290024F743 /* FactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A32226F8A290024F743 /* FactView.swift */; };
 		E3041A35226F8D480024F743 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A34226F8D470024F743 /* ListCell.swift */; };
+		E3041A39226F9A9F0024F743 /* ListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A38226F9A9F0024F743 /* ListService.swift */; };
+		E3041A3B226FA13E0024F743 /* FactApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A3A226FA13E0024F743 /* FactApi.swift */; };
+		E3041A3E226FA1C10024F743 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A3D226FA1C10024F743 /* Api.swift */; };
+		E3041A41226FA1FE0024F743 /* ApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A40226FA1FE0024F743 /* ApiProtocol.swift */; };
+		E3041A45226FA5AB0024F743 /* FactsResultApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3041A44226FA5AB0024F743 /* FactsResultApi.swift */; };
+		E3DEED54226FB47400770C92 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEED53226FB47400770C92 /* ListView.swift */; };
+		E3DEED58226FF05500770C92 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEED57226FF05500770C92 /* UILabelExtension.swift */; };
+		E3DEED5A2270008C00770C92 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DEED592270008C00770C92 /* SearchService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,9 +95,18 @@
 		E3041A27226E6C5B0024F743 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		E3041A2D226E6DBC0024F743 /* ListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProtocols.swift; sourceTree = "<group>"; };
 		E3041A2F226E8E8D0024F743 /* TagListView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TagListView.framework; path = Carthage/Build/iOS/TagListView.framework; sourceTree = "<group>"; };
-		E3041A32226F8A290024F743 /* Fact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fact.swift; sourceTree = "<group>"; };
+		E3041A32226F8A290024F743 /* FactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactView.swift; sourceTree = "<group>"; };
 		E3041A34226F8D470024F743 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		E3041A36226F9A390024F743 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		E3041A38226F9A9F0024F743 /* ListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListService.swift; sourceTree = "<group>"; };
+		E3041A3A226FA13E0024F743 /* FactApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactApi.swift; sourceTree = "<group>"; };
+		E3041A3D226FA1C10024F743 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		E3041A40226FA1FE0024F743 /* ApiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiProtocol.swift; sourceTree = "<group>"; };
+		E3041A44226FA5AB0024F743 /* FactsResultApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsResultApi.swift; sourceTree = "<group>"; };
+		E3DEED53226FB47400770C92 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		E3DEED55226FD88300770C92 /* RxOptional.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxOptional.framework; path = Carthage/Build/iOS/RxOptional.framework; sourceTree = "<group>"; };
+		E3DEED57226FF05500770C92 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		E3DEED592270008C00770C92 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,11 +244,13 @@
 		E30419F7226E3F080024F743 /* List */ = {
 			isa = PBXGroup;
 			children = (
+				E3041A34226F8D470024F743 /* ListCell.swift */,
 				E3041A2D226E6DBC0024F743 /* ListProtocols.swift */,
 				E30419FD226E404B0024F743 /* ListRouter.swift */,
+				E3041A38226F9A9F0024F743 /* ListService.swift */,
 				E30419FB226E403E0024F743 /* ListViewController.swift */,
 				E30419FF226E40570024F743 /* ListViewModel.swift */,
-				E3041A34226F8D470024F743 /* ListCell.swift */,
+				E3DEED53226FB47400770C92 /* ListView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -240,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				E3041A0D226E69820024F743 /* SearchRouter.swift */,
+				E3DEED592270008C00770C92 /* SearchService.swift */,
 				E3041A0F226E699C0024F743 /* SearchViewController.swift */,
 				E3041A11226E69B00024F743 /* SearchViewModel.swift */,
 			);
@@ -250,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				E3041A02226E429B0024F743 /* Extensions */,
+				E3041A3C226FA1B30024F743 /* Libs */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -260,6 +281,7 @@
 				E3041A05226E4B960024F743 /* UIColorExtension.swift */,
 				E3041A07226E5E0E0024F743 /* UIFontExtension.swift */,
 				E3041A03226E42B90024F743 /* UIViewExtension.swift */,
+				E3DEED57226FF05500770C92 /* UILabelExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -267,6 +289,7 @@
 		E3041A14226E6BC60024F743 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E3DEED55226FD88300770C92 /* RxOptional.framework */,
 				E3041A2F226E8E8D0024F743 /* TagListView.framework */,
 				E3041A27226E6C5B0024F743 /* RxCocoa.framework */,
 				E3041A25226E6C520024F743 /* RxSwift.framework */,
@@ -283,9 +306,44 @@
 		E3041A31226F8A1C0024F743 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E3041A32226F8A290024F743 /* Fact.swift */,
+				E3041A42226FA57D0024F743 /* Api */,
+				E3041A43226FA5850024F743 /* View */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E3041A3C226FA1B30024F743 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				E3041A3F226FA1ED0024F743 /* Api */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		E3041A3F226FA1ED0024F743 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				E3041A3D226FA1C10024F743 /* Api.swift */,
+				E3041A40226FA1FE0024F743 /* ApiProtocol.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		E3041A42226FA57D0024F743 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				E3041A3A226FA13E0024F743 /* FactApi.swift */,
+				E3041A44226FA5AB0024F743 /* FactsResultApi.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		E3041A43226FA5850024F743 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E3041A32226F8A290024F743 /* FactView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -449,18 +507,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3041A33226F8A290024F743 /* Fact.swift in Sources */,
+				E3041A45226FA5AB0024F743 /* FactsResultApi.swift in Sources */,
+				E3041A3B226FA13E0024F743 /* FactApi.swift in Sources */,
+				E3041A33226F8A290024F743 /* FactView.swift in Sources */,
+				E3DEED5A2270008C00770C92 /* SearchService.swift in Sources */,
 				E3041A12226E69B00024F743 /* SearchViewModel.swift in Sources */,
+				E3DEED58226FF05500770C92 /* UILabelExtension.swift in Sources */,
 				E3041A10226E699C0024F743 /* SearchViewController.swift in Sources */,
+				E3041A41226FA1FE0024F743 /* ApiProtocol.swift in Sources */,
 				E3041A35226F8D480024F743 /* ListCell.swift in Sources */,
+				E3041A3E226FA1C10024F743 /* Api.swift in Sources */,
 				E3041A04226E42B90024F743 /* UIViewExtension.swift in Sources */,
 				E3041A06226E4B960024F743 /* UIColorExtension.swift in Sources */,
 				E3041A00226E40570024F743 /* ListViewModel.swift in Sources */,
 				E3041A0E226E69820024F743 /* SearchRouter.swift in Sources */,
+				E3DEED54226FB47400770C92 /* ListView.swift in Sources */,
 				E30419FE226E404B0024F743 /* ListRouter.swift in Sources */,
 				E3041A08226E5E0E0024F743 /* UIFontExtension.swift in Sources */,
 				E30419FA226E3F450024F743 /* AppRouter.swift in Sources */,
 				E30419C5226E2C770024F743 /* AppDelegate.swift in Sources */,
+				E3041A39226F9A9F0024F743 /* ListService.swift in Sources */,
 				E30419FC226E403E0024F743 /* ListViewController.swift in Sources */,
 				E3041A2E226E6DBC0024F743 /* ListProtocols.swift in Sources */,
 			);

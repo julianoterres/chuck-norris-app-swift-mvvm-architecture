@@ -20,4 +20,12 @@ extension UIFont {
     return UIFont(name: "HelveticaNeue-Bold", size: 15)!
   }
   
+  static var fontSmallText: UIFont {
+    return UIFont(name: "HelveticaNeue-Bold", size: 15)!
+  }
+  
+  static var fontBigText: UIFont {
+    return UIFont(name: "HelveticaNeue-Bold", size: 25)!
+  }
+  
 }

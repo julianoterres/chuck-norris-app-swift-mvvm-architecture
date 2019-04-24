@@ -15,44 +15,51 @@ class ListViewController: UIViewController {
   let searchBar = UISearchBar()
   let tableView = UITableView()
   let searchContainer = UIView()
+  let loader = UIActivityIndicatorView()
+  let alertResult = UILabel()
   var searchContainerConstraintTop: NSLayoutConstraint?
   var searchContainerConstraintBottom: NSLayoutConstraint?
   
   let disposeBag = DisposeBag()
   var searchViewController: SearchViewController!
-  var router: ListRouterProtocol!
-  var viewModel: ListViewModel!
+  var viewModel: ListViewModel! { didSet { addRxEventsInElements() } }
+//  var searchTerm: Driver<String>!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupView()
-    setupViewModel()
     addElementsInScreen()
-    addRxEventsInElements()
+    
+    
   }
   
   func setupView() {
     view.backgroundColor = .white
   }
   
-  func setupViewModel() {
-    viewModel = ListViewModel(
-      didSearchbarAction: searchBar.rx.searchButtonClicked
-    )
-  }
-  
   func addElementsInScreen() {
     addSeputNavigation()
     addSearchBar()
+    addLoader()
     addTableView()
+    addAlertResult()
     addSearchContainer()
     addSearchView()
   }
   
   func addSeputNavigation() {
     title = "Chuck Norris Facts"
-    navigationItem.largeTitleDisplayMode = .automatic
-    navigationController?.navigationBar.prefersLargeTitles = true
+    navigationItem.largeTitleDisplayMode = .never
+    navigationController?.navigationBar.prefersLargeTitles = false
+  }
+  
+  func addLoader() {
+    view.addSubview(loader)
+    loader.startAnimating()
+    loader.color = .black
+    loader.isUserInteractionEnabled = false
+    loader.addConstraint(attribute: .width, alignElement: nil, alignElementAttribute: .notAnAttribute, constant: 20)
+    loader.addConstraint(attribute: .height, alignElement: nil, alignElementAttribute: .notAnAttribute, constant: 20)
   }
   
   func addSearchBar() {
@@ -70,14 +77,19 @@ class ListViewController: UIViewController {
     tableView.estimatedRowHeight = 200
     tableView.rowHeight = UITableView.automaticDimension
     tableView.allowsSelection = false
+    tableView.separatorStyle = .none
+    tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     tableView.addConstraint(attribute: .top, alignElement: searchBar, alignElementAttribute: .bottom, constant: 0)
     tableView.addConstraint(attribute: .right, alignElement: view, alignElementAttribute: .right, constant: 0)
     tableView.addConstraint(attribute: .left, alignElement: view, alignElementAttribute: .left, constant: 0)
     tableView.addConstraint(attribute: .bottom, alignElement: view, alignElementAttribute: .bottom, constant: 0)
+    loader.addConstraint(attribute: .centerX, alignElement: tableView, alignElementAttribute: .centerX, constant: 0)
+    loader.addConstraint(attribute: .centerY, alignElement: tableView, alignElementAttribute: .centerY, constant: 0)
   }
   
   func addSearchContainer() {
     view.addSubview(searchContainer)
+    searchContainer.clipsToBounds = true
     searchContainerConstraintTop = searchContainer.addConstraint(attribute: .top, alignElement: searchBar, alignElementAttribute: .bottom, constant: 0)
     searchContainerConstraintBottom = searchContainer.addConstraint(attribute: .top, alignElement: view, alignElementAttribute: .bottom, constant: 0)
     searchContainer.addConstraint(attribute: .right, alignElement: view, alignElementAttribute: .right, constant: 0)
@@ -95,7 +107,19 @@ class ListViewController: UIViewController {
     searchViewController.view.addConstraint(attribute: .bottom, alignElement: searchContainer, alignElementAttribute: .bottom, constant: 0)
   }
   
+  func addAlertResult() {
+    view.addSubview(alertResult)
+    alertResult.text = "No results found"
+    alertResult.textAlignment = .center
+    alertResult.isUserInteractionEnabled = false
+    alertResult.isHidden = true
+    alertResult.addConstraint(attribute: .top, alignElement: searchBar, alignElementAttribute: .bottom, constant: 20)
+    alertResult.addConstraint(attribute: .right, alignElement: view, alignElementAttribute: .right, constant: 0)
+    alertResult.addConstraint(attribute: .left, alignElement: view, alignElementAttribute: .left, constant: 0)
+  }
+  
   func showSearchView(_ show: Bool) {
+    searchViewController.scrollView.contentOffset = CGPoint(x: 0, y: 0)
     UIView.animate(withDuration: 0.5) {
       self.searchContainerConstraintTop?.isActive = show
       self.searchContainerConstraintBottom?.isActive = !show
@@ -105,7 +129,11 @@ class ListViewController: UIViewController {
   
   func addRxEventsInElements() {
     
-    viewModel.facts.drive(tableView.rx.items(cellIdentifier: ListCell.identifier, cellType: ListCell.self)) { [weak self] _, fact, cell in
+    viewModel.hideTable.drive(tableView.rx.isHidden).disposed(by: disposeBag)
+    
+    viewModel.hideNoResultFound.drive(alertResult.rx.isHidden).disposed(by: disposeBag)
+    
+    viewModel.facts.drive(tableView.rx.items(cellIdentifier: ListCell.identifier, cellType: ListCell.self)) { _, fact, cell in
       cell.setup(data: fact)
     }.disposed(by: disposeBag)
     
