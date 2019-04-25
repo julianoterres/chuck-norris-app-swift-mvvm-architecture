@@ -14,7 +14,7 @@ class SearchRouter {
     let viewController = SearchViewController()
     let api = API()
     let service = SearchService(api: api)
-    let viewModel = SearchViewModel(service: service)
+    let viewModel = SearchViewModel(loadRecents: viewController.loaderRecents.asObservable(), service: service)
     viewController.viewModel = viewModel
     return viewController
   }

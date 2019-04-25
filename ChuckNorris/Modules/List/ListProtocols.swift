@@ -11,4 +11,5 @@ import UIKit
 protocol ListRouterProtocol {
   var viewController: ListViewController? { get set }
   func build() -> ListViewController
+  func openShare(fact: FactView?)
 }

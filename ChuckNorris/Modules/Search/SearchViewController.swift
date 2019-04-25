@@ -18,6 +18,8 @@ class SearchViewController: UIViewController {
   let recentsTagList = TagListView()
   let suggestionsTitle = UILabel()
   let recentsTitle = UILabel()
+  let loaderRecents = Variable<Bool>(true)
+  let tagSelected = Variable<String>("")
   
   var disposeBag = DisposeBag()
   var viewModel: SearchViewModel! { didSet { addRxEventsInElements() } }
@@ -113,14 +115,27 @@ class SearchViewController: UIViewController {
     
     viewModel.categories.drive(onNext: { [weak self] categories in
       self?.suggestionsTagList.removeAllTags()
-      self?.suggestionsTagList.addTags(Array(categories.shuffled().prefix(8)))
+      let tags = Array(categories.shuffled().prefix(8))
+      for tag in tags {
+        self?.addTag(tag: tag, tagListView: self?.suggestionsTagList)
+      }
     }).disposed(by: disposeBag)
     
     viewModel.recents.drive(onNext: { [weak self] recents in
       self?.recentsTagList.removeAllTags()
-      self?.recentsTagList.addTags(recents.reversed())
+      let tags = recents.reversed()
+      for tag in tags {
+        self?.addTag(tag: tag, tagListView: self?.recentsTagList)
+      }
     }).disposed(by: disposeBag)
     
+  }
+  
+  func addTag(tag: String, tagListView: TagListView?) {
+    let tagView = tagListView?.addTag(tag)
+    tagView?.onTap = { [weak self] tagView in
+      self?.tagSelected.value = tag
+    }
   }
   
 }

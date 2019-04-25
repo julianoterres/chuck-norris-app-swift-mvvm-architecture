@@ -15,15 +15,20 @@ class SearchViewModel {
   let categories: Driver<[String]>
   let recents: Driver<[String]>
   
-  init(service: SearchService) {
+  init(loadRecents: Observable<Bool>,service: SearchService) {
     
     categories = service
       .fetchCategories()
       .map({ $0 })
+      .do(onNext: { (categories) in
+        
+      })
       .asDriver(onErrorJustReturn: [])
     
-    recents = service
-      .fetchCategories()
+    recents = loadRecents
+      .flatMapLatest({ (status) in
+        service.fetchRecents()
+      })
       .map({ $0 })
       .asDriver(onErrorJustReturn: [])
     

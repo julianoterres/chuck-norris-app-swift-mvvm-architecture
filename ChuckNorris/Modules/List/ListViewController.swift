@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import TagListView
 
 class ListViewController: UIViewController {
   
@@ -22,15 +23,13 @@ class ListViewController: UIViewController {
   
   let disposeBag = DisposeBag()
   var searchViewController: SearchViewController!
+  var router: ListRouterProtocol!
   var viewModel: ListViewModel! { didSet { addRxEventsInElements() } }
-//  var searchTerm: Driver<String>!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupView()
     addElementsInScreen()
-    
-    
   }
   
   func setupView() {
@@ -133,12 +132,24 @@ class ListViewController: UIViewController {
     
     viewModel.hideNoResultFound.drive(alertResult.rx.isHidden).disposed(by: disposeBag)
     
-    viewModel.facts.drive(tableView.rx.items(cellIdentifier: ListCell.identifier, cellType: ListCell.self)) { _, fact, cell in
+    viewModel.reloadRecentTags.drive(searchViewController.loaderRecents).disposed(by: disposeBag)
+    
+    searchViewController.tagSelected.asObservable().subscribe(onNext: { [weak self] _ in
+      self?.showSearchView(false)
+      self?.tableView.contentOffset = CGPoint(x: 0, y: 0)
+      self?.view.endEditing(true)
+    }).disposed(by: disposeBag)
+    
+    viewModel.facts.drive(tableView.rx.items(cellIdentifier: ListCell.identifier, cellType: ListCell.self)) { (_, fact, cell) in
       cell.setup(data: fact)
+      cell.buttonShare.rx.tap.subscribe(onNext: { [weak self] _ in
+        self?.router.openShare(fact: cell.fact)
+      }).disposed(by: self.disposeBag)
     }.disposed(by: disposeBag)
     
     searchBar.rx.textDidBeginEditing.subscribe(onNext: { [weak self] _ in
       self?.showSearchView(true)
+      self?.tableView.contentOffset = CGPoint(x: 0, y: 0)
     }).disposed(by: disposeBag)
     
     searchBar.rx.searchButtonClicked.subscribe(onNext: { [weak self] _ in

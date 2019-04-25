@@ -11,4 +11,5 @@ import Foundation
 struct FactView {
   let text: String
   let category: String
+  let url: String
 }
